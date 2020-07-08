@@ -2,7 +2,10 @@
 
 ## JumpBox Provisioner
 
-* List what you did each step to make the jumpbox
-* etc 
+* First thing first was creating Jumpbox to ssh into 
 
-### 
+### Install Docker and create containers 
+
+#### Link up containers so they're on the same wavelength
+
+#### 
