@@ -52,7 +52,85 @@
 
 * slide down under # ex 1 and all the .coms and ip address under neath it and put this "#ex 2: A collection of hosts belonging to the 'webservers' group" Or what ever you named your webserver ya know. 
 
-* Next and finally write underneath that something like this (insert picture) remember to write the private ip of YOUR machines. Not the ones in the image.
+* Next and finally write underneath that something like this (below) remember to write the private ip of YOUR machines. Not the ones below.
+
+ [webservers] 
+10.0.0.6 ansible_python_interpreter=/usr/bin/python3
+10.0.0.7 ansible_python_interpreter=/usr/bin/python3
 
 * Save and quit
 
+####### creating the pentest.yml 
+
+* touch pentest.yml
+* nano pentest.yml
+* Just copy this in your ansible directory
+
+
+---
+- name: Config web VM with Docker
+  hosts: webservers
+  become: true
+  tasks:
+    - name: docker.io
+      apt:
+        update_cache: yes
+        name: docker.io
+        state: present
+    - name: install pip
+      apt:
+        name: python3-pip
+        state: present
+    - name: install Docker python module
+      pip:
+        name: docker
+        state: present
+    - name: download and launch dvwa container
+  - name: install pip
+      apt:
+        name: python3-pip
+        state: present
+    - name: install Docker python module
+      pip:
+        name: docker
+        state: present
+    - name: download and launch dvwa container
+      docker_container:
+        name: dvwa
+        image: cyberxsecurity/dvwa
+        state: started
+        restart_policy: always
+        published_ports: 80:80
+    - name: Enabled docker service
+      systemd:
+        name: docker
+        enabled: yes
+* Last step if you set everything up right then you can run the playbook and it should do the rest run this command
+* ansible-playbook /etc/ansible/pentest.yml
+
+######## Half way there! Now its the Elk setup with Metricbeat and Filebeat setup and done baby.
+
+* To quickly catch ya up to speed on what to do next you'll be doing you will need to be setting up a new network called the Elkstackproject. Or Elknet or whatever. All within the same resource group but in a different location like west coast. Then creating  a new Vm called ElkM1 or whatever you want to call it. Have some creative freedom. 
+
+######### Connecting the two networks in perfect matromony. I mean Harmony...
+
+* Now that you created another network and machine, we need them in connection with our other children that you made for a playdate. So we'll need a Pairing node. 
+
+* Go to the Elks virtual network and look for a tab called "Peerings" and click add new one. You'll select the privouse network you made for it to connect to and hit create. Make sure Gateway transit it disabled too. 
+
+########## Editing the ansible.cfg again... For the last time!
+
+* Remember where you wrote 'remote_user = redteamadim' well youll want to write right underneath it the following 'remote_user = elkadmin' or what user name you did give it. 
+
+########### Editing the Host file. One last time. 
+
+* Under where you put the webserver and the private address of your machines you need to also add the elk server and the private ip of its machine too. like so
+
+ [elk] 
+10.1.0.4 ansible_python_interpreter=/usr/bin/python3
+
+Done
+
+############ Creating Elk Metricbeat, and Filebeat playbooks and running them. We're In the ENDGAME Now. (Am I saying this for you, or is it to motivate me to actually finish this?)
+
+*
