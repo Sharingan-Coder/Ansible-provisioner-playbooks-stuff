@@ -22,3 +22,7 @@
 
 *save and quit
 
+You'll also need to download a config file as well that you can curl from this :  https://www.elastic.co/guide/en/beats/filebeat/index.html
+and put it in a new directory inside the ansible directory called files or whatever you want it, you know the drill here. 
+
+*IMPORTANT NOTICE! Youll have to go inside this config playbook and manually change two things. ctl W to word search 'host' and change the ip addresses for the two of them so they match your elk machines ip or else it wont work. Duh
