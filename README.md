@@ -133,4 +133,4 @@ Done
 
 ############ Creating Elk Metricbeat, and Filebeat playbooks and running them. We're In the ENDGAME Now. (Am I saying this for you, or is it to motivate me to actually finish this?)
 
-*
+* Go to the other files of this for the copy and paste for them all. They do be labled though. 
