@@ -1,0 +1,26 @@
+---
+ - name: Download Metricbeat .deb file
+   hosts: webservers
+   remote_user: redteamadmin
+   become: yes
+   tasks:
+     - name: Download metricbeat ,deb file
+       command: curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.4.0$
+     - name: Install metricbeat .deb
+       command: dpkg -i metricbeat-7.4.0-amd64.deb
+     - name: Drop in metricbeat.yml
+       copy:
+         src: /etc/ansible/files/metricbeat-playbook-config.yml
+         dest: /etc/metricbeat/metricbeat.yml
+         mode: '0644'
+     - name: Enable and configure system module
+       command: metricbeat modules enable system
+     - name: Setup Metricbeat
+       command: filebeat setup
+     - name: Start Metricbeat service
+       command: service metricbeat start
+
+
+Like the File beat youll also have a config playbook that youll need to make this work. so curl the following for the download and put it in your files directory: https://www.elastic.co/guide/en/beats/metricbeat/index.html
+
+Be sure to edit the host part of the config too.
